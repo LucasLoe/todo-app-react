@@ -1,23 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
+import bg_image from './background-image.jpeg'
+import {AppContainer} from './components/ContainerC';
 
-function App() {
+ function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-slate-700 h-screen">
+      <img id="header-image" src={bg_image} alt="background" className='w-full h-1/4 object-cover object-center' />
+      <AppContainer/>
     </div>
   );
 }
