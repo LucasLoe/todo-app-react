@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TaskList } from "./TaskList";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTurnDown } from '@fortawesome/free-solid-svg-icons'
+import { v4 as uuidv4 } from 'uuid';
 
 function AppContainer() {
   const [tasks, setTasks] = useState([])
@@ -9,8 +10,8 @@ function AppContainer() {
   const [listStyle, setListStyle] = useState('all')
 
   const itemCSS = {
-    cssCompleted: "p-3 text-gray-200 line-through hover:bg-blue-700 flex justify-left w-full break-words",
-    cssPending: "p-3 hover:bg-blue-700 hover:text-blue-200 flex justify-left w-full break-words",
+    cssCompleted: "p-3 text-gray-300 line-through hover:bg-blue-700 flex justify-left w-full break-words text-left",
+    cssPending: "p-3 hover:bg-blue-700 hover:text-blue-200 flex justify-left w-full break-words h-auto text-left",
     buttonCssCompleted: "",
     buttonCssPending: ""
   }
@@ -18,27 +19,28 @@ function AppContainer() {
 
   function createTask(event) {
     event.preventDefault();
-    setTasks([...tasks, { text: newTask, status: 'pending' }])
+    setTasks([...tasks, { text: newTask, status: 'pending', uuid: uuidv4()}])
     setNewTask('')
-    console.log('new task created')
   }
+
 
   const handleNewTaskChange = event => {
     setNewTask(event.target.value)
   }
 
   const deleteTask = event => {
-    setTasks(tasks.filter(obj => obj !== tasks[event.currentTarget.getAttribute('index-value')]))
+    setTasks(tasks.filter(obj => obj.uuid !== event.currentTarget.getAttribute('uuid')))
   }
 
-  const completeTask = event => {
-    let newState = [...tasks]
-    if (newState[event.currentTarget.getAttribute('index-value')].status === 'pending') {
-      newState[event.currentTarget.getAttribute('index-value')].status = 'completed'
+  const completeTask = event => { 
+    let currState = tasks.filter(obj => obj.uuid === event.currentTarget.getAttribute('uuid'))[0].status
+    
+    if (currState === 'pending') {
+      let newState = tasks.map(obj => obj.uuid === event.currentTarget.getAttribute('uuid') ? {...obj, status: 'completed'} : obj)
       setTasks(newState)
     }
     else {
-      newState[event.currentTarget.getAttribute('index-value')].status = 'pending'
+      let newState = tasks.map(obj => obj.uuid === event.currentTarget.getAttribute('uuid') ? {...obj, status: 'pending'} : obj)
       setTasks(newState)
     }
   }

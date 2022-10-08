@@ -10,22 +10,22 @@ export function TaskList({ itemCSS, deleteTask, completeTask, tasks }) {
             <ul
                 className="divide-y-2 divide-gray-100 max-w-xl"
             >
-                {tasks.map((e, index) => (
+                {tasks.map((e) => (
                     <li
-                        key={index}
+                        key={e.uuid}
                         className={(e.status === 'pending')? itemCSS.cssPending : itemCSS.cssCompleted}
                     >
-                        <button
-                            index-value={index}
-                            className="mx-2 my-auto hover:text-white"
+                        <input
+                            type='checkbox'
+                            uuid={e.uuid}
+                            className="appearance-none border-2 border-gray-300 w-4 h-4 shrink-0 mx-2 my-auto rounded-full checked:bg-gradient-to-r from-green-200 via-green-300 to-blue-500 checked:border-none checked:content-['_↗'] checked:text-lg checked:text-white"
                             onClick={completeTask}
                         >
-                            <FontAwesomeIcon icon={faCheck} />
-                        </button>
+                        </input>
                         {e.text}
                         <button
                             status={e.status}
-                            index-value={index}
+                            uuid={e.uuid}
                             className="mx-2 my-auto hover:text-white ml-auto"
                             onClick={deleteTask}
                         >
