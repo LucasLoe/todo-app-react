@@ -1,26 +1,35 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan, faCheck } from '@fortawesome/free-solid-svg-icons'
 
-export function TaskList({ tasks }) {
+export function TaskList({ itemCSS, deleteTask, completeTask, tasks }) {  
     return (
         <div
             className='w-full mx-auto bg-white rounded-lg shadow-lg max-w-xl box-border'
         >
             <ul
-                className="divide-y-2 divide-gray-100 "
+                className="divide-y-2 divide-gray-100 max-w-xl"
             >
                 {tasks.map((e, index) => (
                     <li
                         key={index}
-                        className="p-3 hover:bg-blue-700 hover:text-blue-200 flex justify-between"
+                        className={(e.status === 'pending')? itemCSS.cssPending : itemCSS.cssCompleted}
                     >
-                        {e[0]}
                         <button
+                            index-value={index}
                             className="mx-2 my-auto hover:text-white"
-                            onClick={console.log('item clicked')}
+                            onClick={completeTask}
                         >
-                            <FontAwesomeIcon icon={faTrashCan}/>
+                            <FontAwesomeIcon icon={faCheck} />
+                        </button>
+                        {e.text}
+                        <button
+                            status={e.status}
+                            index-value={index}
+                            className="mx-2 my-auto hover:text-white ml-auto"
+                            onClick={deleteTask}
+                        >
+                            <FontAwesomeIcon icon={faTrashCan} />
                         </button>
                     </li>
                 ))}
