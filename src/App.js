@@ -1,6 +1,6 @@
 import './App.css';
 import bg_image from './background-image.jpeg'
-import { AppContainer } from './components/ContainerC';
+import { AppContainer } from './components/ContainerSortable';
 
 function App() {
   return (
